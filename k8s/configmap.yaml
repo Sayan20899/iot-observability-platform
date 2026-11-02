@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iot-api-config
+  namespace: iot-observability
+data:
+  DB_HOST: postgres
+  DB_NAME: iot_observability
+  DB_USER: iot_user
