@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IoT Observability | Operations Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">◎</div><div><strong>pulse<span>grid</span></strong><small>OBSERVABILITY</small></div></div>
+    <div class="workspace-label">WORKSPACE</div>
+    <a class="nav active" href="#"><span>▦</span> Overview</a>
+    <a class="nav" href="#devices"><span>◈</span> Devices</a>
+    <a class="nav" href="#alerts"><span>⚑</span> Alerts <b id="side-alert-count">0</b></a>
+    <div class="sidebar-bottom"><div class="status-dot"></div><div><strong>System operational</strong><small>API connection active</small></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow">OPERATIONS / OVERVIEW</div><h1>IoT Command Center</h1><p class="subtitle">Monitor your connected infrastructure in real time.</p></div>
+      <div class="top-actions"><span class="live-pill"><i></i> LIVE SYSTEM</span><button class="button primary" id="generate-btn">＋ Generate demo data</button></div>
+    </header>
+
+    <section class="metrics">
+      <article class="metric"><div class="metric-top"><span>REGISTERED DEVICES</span><span class="metric-icon purple">◈</span></div><strong id="total-devices">—</strong><small><span class="positive">●</span> Total in inventory</small></article>
+      <article class="metric"><div class="metric-top"><span>ONLINE DEVICES</span><span class="metric-icon green">⌁</span></div><strong id="online-devices">—</strong><small><span class="positive">●</span> Reporting status</small></article>
+      <article class="metric"><div class="metric-top"><span>TELEMETRY READINGS</span><span class="metric-icon blue">⌁</span></div><strong id="total-readings">—</strong><small>Stored measurements</small></article>
+      <article class="metric"><div class="metric-top"><span>ACTIVE ALERTS</span><span class="metric-icon orange">⚑</span></div><strong id="active-alerts">—</strong><small>Require attention</small></article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel chart-panel">
+        <div class="panel-heading"><div><h2>Telemetry overview</h2><p>Temperature trends across connected devices</p></div>
+          <select id="range-select"><option value="24">Last 24 hours</option><option value="48">Last 48 hours</option><option value="168">Last 7 days</option></select>
+        </div>
+        <div class="chart-wrap"><canvas id="telemetry-chart"></canvas></div>
+        <div class="chart-legend"><span><i class="legend-dot purple-bg"></i> Temperature °C</span><span><i class="legend-dot blue-bg"></i> Humidity %</span></div>
+      </article>
+      <article class="panel health-panel">
+        <div class="panel-heading"><div><h2>Infrastructure health</h2><p>Current operating snapshot</p></div><span class="health-symbol">⌁</span></div>
+        <div class="health-number"><strong id="avg-temperature">—</strong><span>°C</span></div>
+        <p class="muted">Average reported temperature</p>
+        <div class="health-divider"></div>
+        <div class="health-row"><span><i class="legend-dot green-bg"></i> API status</span><strong class="healthy">Operational</strong></div>
+        <div class="health-row"><span><i class="legend-dot purple-bg"></i> Data pipeline</span><strong class="healthy">Connected</strong></div>
+        <div class="health-row"><span><i class="legend-dot blue-bg"></i> Database</span><strong class="healthy">Available</strong></div>
+        <p class="health-note">Service health is based on the API health endpoint and database-backed dashboard responses.</p>
+      </article>
+    </section>
+
+    <section class="panel devices-panel" id="devices">
+      <div class="panel-heading"><div><h2>Device inventory</h2><p>Registered endpoints and latest measurements</p></div><button class="button secondary" id="refresh-btn">↻ Refresh</button></div>
+      <div class="table-scroll"><table><thead><tr><th>DEVICE</th><th>LOCATION</th><th>STATUS</th><th>TEMPERATURE</th><th>LAST REPORT</th></tr></thead><tbody id="device-rows"><tr><td colspan="5" class="empty">Loading devices…</td></tr></tbody></table></div>
+    </section>
+
+    <section class="panel alerts-panel" id="alerts">
+      <div class="panel-heading"><div><h2>Recent alerts</h2><p>Threshold-based events from device telemetry</p></div><span class="count-chip" id="alert-chip">0 active</span></div>
+      <div id="alert-list" class="alert-list"><div class="empty">Loading alerts…</div></div>
+    </section>
+    <footer>PulseGrid IoT Observability Platform <span>Built with FastAPI · PostgreSQL · Docker</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
